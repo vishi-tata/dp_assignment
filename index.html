@@ -1,21 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
+
   <title>Title</title>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
   </style>
 </head>
-<body>
 
+<body>
+  <ul class="comments">
+    <li class="comment">
+      <div class="comment-item-info">
+        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+        <h2 class="comment-item-name">
+          juliusomo
+        </h2>
+        <p class="comment-item-time">
+          1 month ago
+        </p>
+      </div>
+      <p class="comment-item-content">
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
+        the design and the responsiveness at various breakpoints works really well."
+      </p>
+      <div class="comment-item-vote">
+        <p><button>-</button><span>3</span><button>+</button></p>
+      </div>
+      <div class="comment-item-actions">
+        <button type="button">Reply</button>
+      </div>
+    </li>
+    <li class="comment">
+      <div class="comment-item-info">
+        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+        <h2 class="comment-item-name">
+          juliusomo
+        </h2>
+        <p class="comment-item-time">
+          1 month ago
+        </p>
+      </div>
+      <p class="comment-item-content">
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
+        the design and the responsiveness at various breakpoints works really well."
+      </p>
+      <div class="comment-item-vote">
+        <p><button>-</button><span>3</span><button>+</button></p>
+      </div>
+      <div class="comment-item-actions">
+        <button type="button">Reply</button>
+      </div>
+    </li>
+    <li class="comment reply">
+      <div class="comment-item-info">
+        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+        <h2 class="comment-item-name">
+          juliusomo
+        </h2>
+        <p class="comment-item-time">
+          1 month ago
+        </p>
+      </div>
+      <p class="comment-item-content">
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
+        the design and the responsiveness at various breakpoints works really well."
+      </p>
+      <div class="comment-item-vote">
+        <p><button>-</button><span>3</span><button>+</button></p>
+      </div>
+      <div class="comment-item-actions">
+        <button type="button">Reply</button>
+      </div>
+    </li>
+    <li class="comment reply">
+      <div class="comment-item-info">
+        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+        <h2 class="comment-item-name">
+          juliusomo
+        </h2>
+        <p class="comment-item-time">
+          1 month ago
+        </p>
+        <p class="comment-item-content">
+          "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
+          nailed
+          the design and the responsiveness at various breakpoints works really well."
+        </p>
+      </div>
+      <div class="comment-item-vote">
+        <p><button>-</button><span>3</span><button>+</button></p>
+      </div>
+      <div class="comment-item-actions current">
+        <button type="button">Delete</button>
+        <button type="button">Edit</button>
+      </div>
+    </li>
+  </ul>
+  <div>
+    <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+    <form>
+      <input type="text" placeholder="Add a comment...">
+      <button>SEND</button>
+    </form>
+  </div>
   <!-- Pull dynamic content from the data.json file -->
 </body>
+
 </html>
