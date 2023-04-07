@@ -5,13 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- displays site properly based on user's device -->
-
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-
   <title>Title</title>
-
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
+  <!-- <style>
     .attribution {
       font-size: 11px;
       text-align: center;
@@ -20,102 +17,128 @@
     .attribution a {
       color: hsl(228, 45%, 44%);
     }
-  </style>
+  </style> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <ul class="comments">
     <li class="comment">
-      <div class="comment-item-info">
+      <div class="comment-item-container">
+        <div class="comment-item-vote">
+          <a><img src="images/icon-minus.svg" alt="minus"></a>
+          <p>3</p>
+          <a><img src="images/icon-plus.svg" alt="plus"></a>
+        </div>
+      </div>
+      <div class="comment-item-details">
         <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
         <h2 class="comment-item-name">
           juliusomo
         </h2>
+        <p class="badge hidden">you</p>
         <p class="comment-item-time">
           1 month ago
         </p>
       </div>
+      <div class="comment-item-actions">
+        <a><img src="images/icon-reply.svg" alt="reply"> Reply</a>
+      </div>
       <p class="comment-item-content">
-        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
+        nailed
         the design and the responsiveness at various breakpoints works really well."
       </p>
-      <div class="comment-item-vote">
-        <p><button>-</button><span>3</span><button>+</button></p>
-      </div>
-      <div class="comment-item-actions">
-        <button type="button">Reply</button>
-      </div>
     </li>
     <li class="comment">
-      <div class="comment-item-info">
+      <div class="comment-item-container">
+        <div class="comment-item-vote">
+          <a><img src="images/icon-minus.svg" alt="minus"></a>
+          <p>3</p>
+          <a><img src="images/icon-plus.svg" alt="plus"></a>
+        </div>
+      </div>
+      <div class="comment-item-details">
         <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
         <h2 class="comment-item-name">
           juliusomo
         </h2>
+        <p class="badge hidden">you</p>
         <p class="comment-item-time">
           1 month ago
         </p>
-      </div>
-      <p class="comment-item-content">
-        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
-        the design and the responsiveness at various breakpoints works really well."
-      </p>
-      <div class="comment-item-vote">
-        <p><button>-</button><span>3</span><button>+</button></p>
       </div>
       <div class="comment-item-actions">
-        <button type="button">Reply</button>
-      </div>
-    </li>
-    <li class="comment reply">
-      <div class="comment-item-info">
-        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
-        <h2 class="comment-item-name">
-          juliusomo
-        </h2>
-        <p class="comment-item-time">
-          1 month ago
-        </p>
+        <a><img src="images/icon-reply.svg" alt="reply"> Reply</a>
       </div>
       <p class="comment-item-content">
-        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
+        nailed
         the design and the responsiveness at various breakpoints works really well."
       </p>
-      <div class="comment-item-vote">
-        <p><button>-</button><span>3</span><button>+</button></p>
-      </div>
-      <div class="comment-item-actions">
-        <button type="button">Reply</button>
-      </div>
     </li>
     <li class="comment reply">
-      <div class="comment-item-info">
+      <div class="comment-item-container">
+        <div class="comment-item-vote">
+          <a><img src="images/icon-minus.svg" alt="minus"></a>
+          <p>3</p>
+          <a><img src="images/icon-plus.svg" alt="plus"></a>
+        </div>
+      </div>
+      <div class="comment-item-details">
         <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
         <h2 class="comment-item-name">
           juliusomo
         </h2>
+        <p class="badge hidden">you</p>
         <p class="comment-item-time">
           1 month ago
         </p>
-        <p class="comment-item-content">
-          "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
-          nailed
-          the design and the responsiveness at various breakpoints works really well."
+      </div>
+      <div class="comment-item-actions">
+        <a><img src="images/icon-reply.svg" alt="reply"> Reply</a>
+      </div>
+      <p class="comment-item-content">
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
+        nailed
+        the design and the responsiveness at various breakpoints works really well."
+      </p>
+    </li>
+    <li class="comment reply">
+      <div class="comment-item-container">
+        <div class="comment-item-vote">
+          <a><img src="images/icon-minus.svg" alt="minus"></a>
+          <p>3</p>
+          <a><img src="images/icon-plus.svg" alt="plus"></a>
+        </div>
+      </div>
+      <div class="comment-item-details">
+        <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
+        <h2 class="comment-item-name">
+          juliusomo
+        </h2>
+        <p class="badge hidden">you</p>
+        <p class="comment-item-time">
+          1 month ago
         </p>
       </div>
-      <div class="comment-item-vote">
-        <p><button>-</button><span>3</span><button>+</button></p>
+      <div class="comment-item-actions">
+        <a><img src="images/icon-reply.svg" alt="reply"> Reply</a>
       </div>
-      <div class="comment-item-actions current">
-        <button type="button">Delete</button>
-        <button type="button">Edit</button>
-      </div>
+      <p class="comment-item-content">
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've
+        nailed
+        the design and the responsiveness at various breakpoints works really well."
+      </p>
     </li>
   </ul>
-  <div>
+  <div id="comment-input-area">
     <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
     <form>
-      <input type="text" placeholder="Add a comment...">
+      <textarea cols="30" rows="3" placeholder="Add a comment..."></textarea>
       <button>SEND</button>
     </form>
   </div>
