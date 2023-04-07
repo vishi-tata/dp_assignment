@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- displays site properly based on user's device -->
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <title>Title</title>
+  <title>Comments</title>
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <!-- <style>
     .attribution {
@@ -25,6 +25,15 @@
 </head>
 
 <body>
+  <div id="backdrop"></div>
+  <aside class="modal">
+    <div>
+      <h2>Delete comment</h2>
+      <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone</p>
+      <button type="button" id="cancel_button">NO, CANCEL</button>
+      <button type="button" id="delete_button">YES, DELETE</button>
+    </div>
+  </aside>
   <ul class="comments">
     <li class="comment">
       <div class="comment-item-container">
@@ -138,7 +147,7 @@
   <div id="comment-input-area">
     <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
     <form>
-      <textarea cols="30" rows="3" placeholder="Add a comment..."></textarea>
+      <textarea rows="4" placeholder="Add a comment..."></textarea>
       <button>SEND</button>
     </form>
   </div>
