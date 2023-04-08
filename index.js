@@ -42,9 +42,9 @@ function onClickVote(commentId, isReply, type) {
   }
 }
 
-function sendComment(event) {
+function sendComment(event, type) {
   event.preventDefault();
-  let textArea = document.getElementById('comment_area');
+  let textArea = document.getElementById(`${type}_area`);
   let message = textArea.value;
   textArea.value = "";
   if (currentComment) {
@@ -53,16 +53,28 @@ function sendComment(event) {
         if (!currentComment.isReply) {
           if (item.id === currentComment.commentId) {
             item.content = message;
-            document.getElementById(`message_${currentComment.commentId}`).innerText = item.content;
+            let p = `<p class="comment-item-content" id="message_${currentComment.commentId}">${item.content}</p>`
+            document.getElementById("edit_comment_form").remove();
+            document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+            document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+              node.classList.remove('disableClick');
+            });
             updateLocalStorage();
+            currentComment = null;
             break;
           }
         } else {
           for (let subItem of item.replies) {
             if (subItem.id === currentComment.commentId) {
               subItem.content = message;
-              document.getElementById(`message_${currentComment.commentId}`).innerHTML = `<span class="replyingTo">@${currentComment.replyingTo}</span> ` + subItem.content;
+              let p = `<p class="comment-item-content" id="message_${currentComment.commentId}"><span class="replyingTo">@${currentComment.replyingTo}</span> ${subItem.content}</p>`
+              document.getElementById("edit_comment_form").remove();
+              document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+              document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+                node.classList.remove('disableClick');
+              });
               updateLocalStorage();
+              currentComment = null;
               return;
             }
           }
@@ -73,7 +85,7 @@ function sendComment(event) {
       let newComment = {
         "id": new Date().getTime(),
         "content": message,
-        "createdAt": new Date().toISOString(),
+        "createdAt": new Date().toLocaleString(),
         "score": 0,
         "user": JSON.parse(JSON.stringify(currentUser)),
         "replyingTo": currentComment.replyingTo,
@@ -91,6 +103,10 @@ function sendComment(event) {
             let commentStr = createComment(newComment, true);
             document.getElementById(`comment_${requiredId}`).insertAdjacentHTML('afterend', commentStr);
             updateLocalStorage();
+            currentComment = null;
+            if (type === 'reply') {
+              document.getElementById('reply-input-area').remove();
+            }
             break;
           }
         } else {
@@ -101,28 +117,29 @@ function sendComment(event) {
               let commentStr = createComment(newComment, true);
               document.getElementById(`comment_${requiredId}`).insertAdjacentHTML('afterend', commentStr);
               updateLocalStorage();
+              currentComment = null;
+              if (type === 'reply') {
+                document.getElementById('reply-input-area').remove();
+              }
               return;
             }
           }
         }
       }
     }
-    currentComment = null;
   } else {
     let newComment = {
       "id": new Date().getTime(),
       "content": message,
-      "createdAt": new Date().toISOString(),
+      "createdAt": new Date().toLocaleString(),
       "score": 0,
       "user": JSON.parse(JSON.stringify(currentUser)),
       "replies": []
     }
     let commentStr = createComment(newComment, false);
     let commentsContainer = document.querySelector(".comments");
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(commentStr, "text/html");
-    const nodes = doc.body.firstChild;
-    commentsContainer.appendChild(nodes);
+    let commentNodes = stringToNode(commentStr)
+    commentsContainer.appendChild(commentNodes);
     comments.push(newComment);
     updateLocalStorage();
   }
@@ -162,19 +179,93 @@ function createComment(comment, isReply) {
 }
 
 function editComment(commentId, isReply, replyingTo) {
+  if (currentComment) {
+    if (currentComment.action === 'isEditing') {
+      for (let item of comments) {
+        if (!currentComment.isReply) {
+          if (item.id === currentComment.commentId) {
+            let p = `<p class="comment-item-content" id="message_${currentComment.commentId}">${item.content}</p>`
+            document.getElementById("edit_comment_form").remove();
+            document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+            document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+              node.classList.remove('disableClick');
+            });
+            break;
+          }
+        } else {
+          for (let subItem of item.replies) {
+            if (subItem.id === currentComment.commentId) {
+              let p = `<p class="comment-item-content" id="message_${currentComment.commentId}"><span class="replyingTo">@${currentComment.replyingTo}</span> ${subItem.content}</p>`
+              document.getElementById("edit_comment_form").remove();
+              document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+              document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+                node.classList.remove('disableClick');
+              });
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      document.getElementById('reply-input-area').remove();
+    }
+  }
   let message = document.getElementById(`message_${commentId}`).innerText;
   message = message.replace(`@${replyingTo} `, '');
-  let textArea = document.getElementById('comment_area');
+  let textarea = `<form id="edit_comment_form" onsubmit="sendComment(event,'edit')"><textarea value="${message}" id="edit_area" rows="4"></textarea><button>UPDATE</button>
+  </form>
+  `;
+  document.getElementById(`message_${commentId}`).remove();
+  document.getElementById(`comment_${commentId}`).appendChild(stringToNode(textarea));
+  let textArea = document.getElementById('edit_area');
   textArea.value = message;
   textArea.setSelectionRange(message.length, message.length);
   textArea.focus();
+  document.querySelectorAll(`#comment_${commentId} .comment-item-actions a`).forEach((node) => {
+    node.classList.add('disableClick');
+  });
   currentComment = { commentId, isReply, replyingTo, action: 'isEditing' };
 }
 
 function replyComment(commentId, isReply, replyingTo) {
+  if (currentComment) {
+    if (currentComment.commentId === commentId) {
+      return;
+    } else if (currentComment.action === 'isReplying') {
+      // prompt('Do you want discard changes?');//todo
+      document.getElementById('reply-input-area').remove();
+    } else if (currentComment.action === 'isEditing') {
+      for (let item of comments) {
+        if (!currentComment.isReply) {
+          if (item.id === currentComment.commentId) {
+            let p = `<p class="comment-item-content" id="message_${currentComment.commentId}">${item.content}</p>`
+            document.getElementById("edit_comment_form").remove();
+            document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+            document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+              node.classList.remove('disableClick');
+            });
+            break;
+          }
+        } else {
+          for (let subItem of item.replies) {
+            if (subItem.id === currentComment.commentId) {
+              let p = `<p class="comment-item-content" id="message_${currentComment.commentId}"><span class="replyingTo">@${currentComment.replyingTo}</span> ${subItem.content}</p>`
+              document.getElementById("edit_comment_form").remove();
+              document.getElementById(`comment_${currentComment.commentId}`).appendChild(stringToNode(p));
+              document.querySelectorAll(`#comment_${currentComment.commentId} .comment-item-actions a`).forEach((node) => {
+                node.classList.remove('disableClick');
+              });
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
   currentComment = { commentId, isReply, replyingTo, action: 'isReplying' };
-  let textArea = document.getElementById('comment_area');
   let replyingToMessage = `@${replyingTo} `;
+  renderInputArea(replyingToMessage);
+  let textArea = document.getElementById('reply_area');
   textArea.value = replyingToMessage;
   textArea.setSelectionRange(replyingToMessage.length, replyingToMessage.length);
   textArea.focus();
@@ -204,6 +295,7 @@ function deleteComment() {
         });
         comments.splice(i, 1);
         updateLocalStorage();
+        onCancel();
         break;
       }
     } else {
@@ -213,12 +305,12 @@ function deleteComment() {
           document.getElementById(`comment_${commentId}`).remove();
           item.replies.splice(j, 1);
           updateLocalStorage();
+          onCancel();
           return;
         }
       }
     }
   }
-  onCancel();
 }
 
 function renderComments() {
@@ -233,42 +325,15 @@ function renderComments() {
   commentsContainer.innerHTML = commentsElement.join("");
 }
 
-function renderInputArea(type) {
-  let inputArea = `<div id="comment-input-area">
+function renderInputArea(replyingToMessage) {
+  let inputArea = `<div id="reply-input-area" class="${currentComment.isReply ? 'reply' : ''}">
   <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
-  <form onsubmit="sendComment(event)">
-    <textarea rows="4" placeholder="Add a comment..." id="comment_area"></textarea>
-    <button>${type}</button>
+  <form onsubmit="sendComment(event,'reply')">
+    <textarea rows="4" placeholder="Add a comment..." id="reply_area" value="${replyingToMessage}"></textarea>
+    <button>REPLY</button>
   </form>
-</div>`
-  for (let item of comments) {
-    let requiredId;
-    if (!currentComment.isReply) {
-      if (item.id === currentComment.commentId) {
-        if (item.replies.length === 0) {
-          requiredId = item.id;
-        } else {
-          requiredId = item.replies[item.replies.length - 1].id;
-        }
-        item.replies.push(newComment);
-        let commentStr = createComment(newComment, true);
-        document.getElementById(`comment_${requiredId}`).insertAdjacentHTML('afterend', commentStr);
-        updateLocalStorage();
-        break;
-      }
-    } else {
-      for (let subItem of item.replies) {
-        if (subItem.id === currentComment.commentId) {
-          requiredId = item.replies[item.replies.length - 1].id;
-          item.replies.push(newComment);
-          let commentStr = createComment(newComment, true);
-          document.getElementById(`comment_${requiredId}`).insertAdjacentHTML('afterend', commentStr);
-          updateLocalStorage();
-          return;
-        }
-      }
-    }
-  }
+</div>`;
+  document.getElementById(`comment_${currentComment.commentId}`).insertAdjacentHTML('afterend', inputArea);
 }
 
 async function loadData() {
@@ -302,6 +367,12 @@ async function init() {
       await loadData();
     }
   }
+}
+
+function stringToNode(str) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(str, "text/html");
+  return doc.body.firstChild;
 }
 
 init();
