@@ -213,7 +213,6 @@ li.reply::before,
 }
 
 #reply-input-area {
-  width: 100%;
   margin: 0;
 }
 
@@ -300,7 +299,8 @@ textarea {
     object-fit: cover;
   }
 
-  li.reply {
+  li.reply,
+  #reply-input-area.reply {
     width: 90%;
     margin-left: 10%;
   }
