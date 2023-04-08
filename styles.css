@@ -36,23 +36,42 @@ a {
   position: fixed;
   width: 30%;
   max-width: 432px;
-  top: 40%;
-  left: 35%;
+  top: calc(50vh - 120px);
+  left: calc(50vw - 216px);
   background-color: var(--color-neutral-white);
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
   display: none;
   z-index: 11;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.modal_buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.modal h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.modal p {
+  color: var(--color-neutral-grayishBlue);
+  margin-bottom: 1.5rem;
 }
 
 .modal button {
   font: inherit;
-  padding: 1rem 2rem;
-  margin: 0 1rem;
+  margin: 0;
+  padding: 1rem 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   border: none;
+  flex: 1;
 }
 
 #cancel_button {
@@ -221,11 +240,13 @@ textarea {
   box-sizing: border-box;
 }
 
-form>button {
+#comment-input-area>button,
+#reply-input-area>button {
   background-color: var(--color-primary-moderateBlue);
   color: var(--color-neutral-white);
   padding: 0.5rem 1rem;
   border-radius: 8px;
+  align-self: flex-start;
 }
 
 @media screen and (max-width: 767px) {
@@ -234,7 +255,7 @@ form>button {
   }
 
   ul.comments {
-    width: 90%;
+    width: 100%;
   }
 
   .comment {
@@ -266,7 +287,8 @@ form>button {
   }
 
   .comment-item-details>img,
-  #comment-input-area>img {
+  #comment-input-area>img,
+  #reply-input-area>img {
     height: 32px;
     width: 32px;
     object-fit: cover;
@@ -278,5 +300,47 @@ form>button {
   }
 
   #comment-input-area,
-  #reply-input-area {}
+  #reply-input-area {
+    width: 100%;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+  }
+
+  #comment-input-area>img,
+  #reply-input-area>img {
+    grid-area: 3/1/span 1/ span 1;
+  }
+
+  #comment-input-area>form,
+  #reply-input-area>form {
+    grid-area: 1/1/span 2/ span 2;
+    width: 100%;
+  }
+
+  #comment-input-area>button,
+  #reply-input-area>button {
+    grid-area: 3/2/span 1/ span 1;
+  }
+
+  .modal {
+    top: calc(50vh - 112px);
+    width: calc(100vw - 32px);
+    left: unset;
+    text-align: left;
+    padding: 1.5rem;
+  }
+
+  .modal_buttons {
+    display: flex;
+    gap: 15px;
+  }
+
+  .modal button {
+    margin: 0;
+    padding: 1rem 0.75rem;
+    flex: 1;
+  }
+
 }

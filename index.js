@@ -328,10 +328,10 @@ function renderComments() {
 function renderInputArea(replyingToMessage) {
   let inputArea = `<div id="reply-input-area" class="${currentComment.isReply ? 'reply' : ''}">
   <img class="comment-item-image" src="./images/avatars/image-juliusomo.png" alt="juliusomo">
-  <form onsubmit="sendComment(event,'reply')">
+  <form>
     <textarea rows="4" placeholder="Add a comment..." id="reply_area" value="${replyingToMessage}"></textarea>
-    <button>REPLY</button>
-  </form>
+    </form>
+    <button onclick="sendComment(event,'reply')" type="button">REPLY</button>
 </div>`;
   document.getElementById(`comment_${currentComment.commentId}`).insertAdjacentHTML('afterend', inputArea);
 }
