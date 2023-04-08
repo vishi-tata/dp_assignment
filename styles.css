@@ -187,7 +187,7 @@ li.reply::before,
   content: "";
   width: 2px;
   height: calc(100%);
-  background-color: var(--color-neutral-veryLightGray);
+  background-color: var(--color-primary-lightGrayishBlue);
   display: block;
   position: absolute;
   left: -12.5%;
@@ -226,9 +226,10 @@ form {
 
 #edit_comment_form {
   flex-direction: column;
-  align-items: flex-end;
+  display: flex;
   grid-area: 2/2/ span 2/ span 3;
   margin-top: 1rem;
+  gap: 1rem;
 }
 
 textarea {
@@ -241,12 +242,17 @@ textarea {
 }
 
 #comment-input-area>button,
-#reply-input-area>button {
+#reply-input-area>button,
+#edit_comment_form>button {
   background-color: var(--color-primary-moderateBlue);
   color: var(--color-neutral-white);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   align-self: flex-start;
+}
+
+#edit_comment_form>button {
+  align-self: flex-end;
 }
 
 @media screen and (max-width: 767px) {
@@ -306,6 +312,10 @@ textarea {
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
+  }
+
+  #edit_comment_form {
+    grid-area: 2/1/ span 2/ span 2;
   }
 
   #comment-input-area>img,

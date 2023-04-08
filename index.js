@@ -40,6 +40,17 @@ function onClickVote(commentId, isReply, type) {
       }
     }
   }
+  let clonedComments = JSON.parse(JSON.stringify(comments));
+  let beforeSorted = clonedComments.map((item) => item.score);
+  clonedComments = clonedComments.sort((a, b) => b.score - a.score);
+  let afterSorted = clonedComments.map((item) => item.score);
+  if (JSON.stringify(beforeSorted) !== JSON.stringify(afterSorted)) {
+    comments = comments.sort((a, b) => b.score - a.score);
+    renderComments();
+    updateLocalStorage();
+  }
+  console.log('beforeSorted', beforeSorted)
+  console.log('afterSorted', afterSorted)
 }
 
 function sendComment(event, type) {
@@ -151,9 +162,8 @@ function createComment(comment, isReply) {
   <li class="comment ${isReply ? "reply" : ""}" id="comment_${comment.id}">
     <div class="comment-item-container">
       <div class="comment-item-vote">
-        <a onclick="onClickVote(${comment.id}, ${isReply}, 'minus')"><img src="images/icon-minus.svg" alt="minus"></a>
-        <p id="score_${comment.id}">${comment.score}</p>
-        <a onclick="onClickVote(${comment.id}, ${isReply}, 'add')" ><img src="images/icon-plus.svg" alt="plus"></a>
+      <a onclick="onClickVote(${comment.id}, ${isReply}, 'add')" ><img src="images/icon-plus.svg" alt="plus"></a>
+        <p id="score_${comment.id}">${comment.score}</p><a onclick="onClickVote(${comment.id}, ${isReply}, 'minus')"><img src="images/icon-minus.svg" alt="minus"></a>
       </div>
     </div>
     <div class="comment-item-details">
@@ -212,8 +222,8 @@ function editComment(commentId, isReply, replyingTo) {
   }
   let message = document.getElementById(`message_${commentId}`).innerText;
   message = message.replace(`@${replyingTo} `, '');
-  let textarea = `<form id="edit_comment_form" onsubmit="sendComment(event,'edit')"><textarea value="${message}" id="edit_area" rows="4"></textarea><button>UPDATE</button>
-  </form>
+  let textarea = `<div id="edit_comment_form"><form><textarea value="${message}" id="edit_area" rows="4"></textarea>
+  </form><button type="button" onclick="sendComment(event,'edit')">UPDATE</button></div>
   `;
   document.getElementById(`message_${commentId}`).remove();
   document.getElementById(`comment_${commentId}`).appendChild(stringToNode(textarea));
@@ -348,7 +358,7 @@ async function loadData() {
 
 function setData(data) {
   currentUser = data.currentUser;
-  comments = data.comments;
+  comments = data.comments.sort((a, b) => b.score - a.score);
   updateLocalStorage();
   renderComments();
   createCurrentUser();
